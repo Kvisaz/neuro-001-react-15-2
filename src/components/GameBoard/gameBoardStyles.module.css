@@ -1,0 +1,7 @@
+.board {
+    display: flex;
+    flex-wrap: wrap;
+    width: 250px;
+    margin: 20px auto;
+    user-select: none;
+}
