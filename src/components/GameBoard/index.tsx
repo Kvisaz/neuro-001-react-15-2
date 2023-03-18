@@ -3,9 +3,11 @@ import {Square} from '../Square';
 import gameBoardStyles from './gameBoardStyles.module.css';
 import {wait} from "@testing-library/user-event/dist/utils";
 
+const DEFAULT_BOARD = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
+
 export const GameBoard = () => {
     const [isStarted, setIsStarted] = useState(true);
-    const [board, setBoard] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0]);
+    const [board, setBoard] = useState(DEFAULT_BOARD);
 
     const shuffleBoard = () => {
         let shuffledBoard = board.slice();
@@ -37,8 +39,8 @@ export const GameBoard = () => {
 
     useEffect(() => {
         if (isStarted) return;
-        if (board.toString() === [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0].toString()) {
-            wait(1000).then(() => {
+        if (board.toString() === DEFAULT_BOARD.toString()) {
+            wait(250).then(() => {
                 alert('You won!');
             })
         }
