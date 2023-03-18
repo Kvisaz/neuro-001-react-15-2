@@ -1,8 +1,10 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Square} from '../Square';
 import gameBoardStyles from './gameBoardStyles.module.css';
+import {wait} from "@testing-library/user-event/dist/utils";
 
 export const GameBoard = () => {
+    const [isStarted, setIsStarted] = useState(true);
     const [board, setBoard] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0]);
 
     const shuffleBoard = () => {
@@ -21,7 +23,7 @@ export const GameBoard = () => {
         setBoard(shuffledBoard);
     };
 
-    const handleSquareClick = (squareIndex:number) => {
+    const handleSquareClick = (squareIndex: number) => {
         const squares = board.slice();
         const emptySquareIndex = squares.indexOf(0);
 
@@ -30,11 +32,17 @@ export const GameBoard = () => {
             squares[squareIndex] = 0;
             setBoard(squares);
         }
-
-        if (squares.toString() === [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, null].toString()) {
-            alert('You won!');
-        }
+        setIsStarted(false);
     };
+
+    useEffect(() => {
+        if (isStarted) return;
+        if (board.toString() === [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0].toString()) {
+            wait(1000).then(() => {
+                alert('You won!');
+            })
+        }
+    }, [board, isStarted])
 
     return (
         <div className={gameBoardStyles.board}>
